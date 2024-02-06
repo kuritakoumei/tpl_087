@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>問診票</title>
+    <script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+</head>
+<body>
+<tr>
+    <td width="33" height="695" >&nbsp;</td>
+    <td width="714" align="left" valign="top"><table width="713" border="1" cellspacing="4" bordercolor="#000000">
+        <tbody><tr>
+            <td><table width="100%" border="0">
+                <tbody><tr>
+                    <td width="702" height="30" colspan="4"><div align="center"><font size="5px"><b>事前問診表</b></font></div></td>
+                </tr>
+                <tr>
+                    <td height="18" colspan="4">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td height="30" colspan="4">下記の内容をご入力ください。</td>
+                </tr>
+                <tr>
+                    <td height="72" colspan="4"><table width="900" border="1" bordercolor="#000000">
+                        <tbody><tr>
+                            <td width="184" height="37">氏名<input type="text" name="first-name" maxlength="10" value=""></td>
+                            <td width="237">生年月日
+                                <div class="form-select-wrap">
+                                    <select class="birthday-year">
+                                    </select>
+                                    /
+                                    <select class="birthday-month">
+                                    </select>
+                                    /
+                                    <select class="birthday-day">
+                                    </select>
+                                </div>
+                            </td>
+                            <td width="900">
+                                <select name="num" id="ageSelect">
+                                    <option value="">-</option>
+                                </select>歳
+                            </td>
+                            <td width="2000">性別：
+                                <input type="radio" name="gender">男性
+                                <input type="radio" name="gender">女性
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="41" colspan="4">住所：<input type="text" size="115" name="adress"></td>
+                        </tr>
+                        <tr>
+                            <td height="32" colspan="4">電話：<input type="tel" size="50" inputmode="tel" name="phone"></td>
+                        </tr>
+                        </tbody></table></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><table width="693" border="0">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <span class="textbox-002-label">◎調子の悪い場所はどこですか？</span>
+                                <textarea class="textbox-002" name="not_feeling" rows="5" cols="50" placeholder="ご記入ください">${mediQue.getNot_feeling()}</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="textbox-002-label">◎いつからですか？</span>
+                                <textarea class="textbox-002" name="since_when" rows="5" cols="50" placeholder="ご記入ください">${mediQue.getSince_when()}</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="textbox-002-label">◎どのような症状ですか？</span>
+                                <textarea class="textbox-002" name="symptoms" rows="5" cols="50" placeholder="ご記入ください">${mediQue.getSymptoms()}</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="textbox-002-label">◎思い当たる原因はありますか？</span>
+                                <textarea class="textbox-002" name="cause" rows="5" cols="50" placeholder="ご記入ください">${mediQue.getCause()}</textarea >
+                            </td>
+                        </tr>
+                        <tr>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="textbox-002-label">◎その他、気になることがあればお書きください。</span>
+                                <textarea class="textbox-002" name="other" rows="5" cols="50"  placeholder="ご記入ください">${mediQue.getOther()}</textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div align="center"><input type="submit" value="送信する" class="button">
+                            </td>
+                        </tr>
+
+                        </tbody></table></td>
+                </tr>
+                </tbody></table></td>
+        </tr>
+        </tbody></table></td>
+</tr>
+<script>
+    var ageSelect = document.getElementById("ageSelect");
+
+    for (var i = 0; i <= 99; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = i ;
+        ageSelect.add(option);
+    }
+</script>
+<script>
+    let userBirthdayYear = document.querySelector('.birthday-year');
+    let userBirthdayMonth = document.querySelector('.birthday-month');
+    let userBirthdayDay = document.querySelector('.birthday-day');
+
+    /**
+     * selectのoptionタグを生成するための関数
+     * @param {Element} elem 変更したいselectの要素
+     * @param {Number} val 表示される文字と値の数値
+     */
+    function createOptionForElements(elem, val) {
+        let option = document.createElement('option');
+        option.text = val;
+        option.value = val;
+        elem.appendChild(option);
+    }
+
+    //年の生成
+    for(let i = 1920; i <= 2020; i++) {
+        createOptionForElements(userBirthdayYear, i);
+    }
+    //月の生成
+    for(let i = 1; i <= 12; i++) {
+        createOptionForElements(userBirthdayMonth, i);
+    }
+    //日の生成
+    for(let i = 1; i <= 31; i++) {
+        createOptionForElements(userBirthdayDay, i);
+    }
+
+    /**
+     * 日付を変更する関数
+     */
+    function changeTheDay() {
+        //日付の要素を削除
+        userBirthdayDay.innerHTML = '';
+
+        //選択された年月の最終日を計算
+        let lastDayOfTheMonth = new Date(userBirthdayYear.value, userBirthdayMonth.value, 0).getDate();
+
+        //選択された年月の日付を生成
+        for(let i = 1; i <= lastDayOfTheMonth; i++) {
+            createOptionForElements(userBirthdayDay, i);
+        }
+    }
+
+    userBirthdayYear.addEventListener('change', function() {
+        changeTheDay();
+    });
+
+    userBirthdayMonth.addEventListener('change', function() {
+        changeTheDay();
+    });
+</script>
+</body>
+</html>
