@@ -456,6 +456,20 @@ img.alignleft{margin:0 7px 2px 0;}
 
 .alignright{float:right;}
 .alignleft{float:left;}
+/* Google マップの iframe に対するスタイル */
+.map-container iframe {
+	width: 100%; /* コンテナの幅いっぱいに広がるように調整 */
+	height: 400px; /* 適切な高さに設定（任意で調整） */
+	border: 0; /* 不要な枠線を削除 */
+}
+
+/* コメントを表示する領域に対するスタイル */
+.comment-container {
+	font-size: 25px;
+
+	top: 0;
+
+}
 
 
 /* PC用
@@ -693,6 +707,12 @@ img.alignleft{margin:0 7px 2px 0;}
 	#footer.logo,#footer .info{width:100%;float:none;}
 	#footer .logo p{float:none;display:block;	}
 	#footer .logo img{float:none;padding:0;}
+	.map-container {
+		position: relative;
+		width: 100%; /* ページの幅いっぱいに広がるように調整 */
+	}
+
+
 }
 
 
